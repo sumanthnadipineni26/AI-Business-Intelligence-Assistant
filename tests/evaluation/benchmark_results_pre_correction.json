@@ -1,0 +1,2544 @@
+{
+  "timestamp": "2026-10-12 10:00:09",
+  "total_queries": 20,
+  "summary_metrics": {
+    "1_Baseline_Rule_Matcher": {
+      "status": "COMPLETED",
+      "description": "Production regex/rule-based matcher with static aggregations",
+      "metrics": {
+        "precision_at_5": 0.0,
+        "recall_at_5": 0.0,
+        "mrr": 0.0,
+        "numerical_correctness": 0.375,
+        "semantic_grounding": 0.0,
+        "abstention_accuracy": 0.8,
+        "avg_latency_ms": 0.36,
+        "total_queries_evaluated": 20
+      }
+    },
+    "2_Lexical_BM25": {
+      "status": "COMPLETED",
+      "description": "Pure-Python BM25Okapi lexical retrieval (k1=1.5, b=0.75)",
+      "metrics": {
+        "precision_at_5": 0.5333,
+        "recall_at_5": 0.8,
+        "mrr": 0.9333,
+        "numerical_correctness": 1.0,
+        "semantic_grounding": 1.0,
+        "abstention_accuracy": 1.0,
+        "avg_latency_ms": 0.55,
+        "total_queries_evaluated": 20
+      }
+    },
+    "3_Dense_MiniLM_FAISS": {
+      "status": "COMPLETED",
+      "description": "Sentence-BERT all-MiniLM-L6-v2 (384-d) with FAISS IndexFlatIP",
+      "metrics": {
+        "precision_at_5": 0.5333,
+        "recall_at_5": 0.8533,
+        "mrr": 0.9667,
+        "numerical_correctness": 1.0,
+        "semantic_grounding": 1.0,
+        "abstention_accuracy": 1.0,
+        "avg_latency_ms": 18.32,
+        "total_queries_evaluated": 20
+      }
+    },
+    "4_Hybrid_RRF": {
+      "status": "COMPLETED",
+      "description": "Reciprocal Rank Fusion (k=60) combining all-MiniLM-L6-v2 and BM25",
+      "metrics": {
+        "precision_at_5": 0.5333,
+        "recall_at_5": 0.8,
+        "mrr": 0.9333,
+        "numerical_correctness": 1.0,
+        "semantic_grounding": 1.0,
+        "abstention_accuracy": 1.0,
+        "avg_latency_ms": 16.36,
+        "total_queries_evaluated": 20
+      }
+    },
+    "5_CrossEncoder_Rerank": {
+      "status": "COMPLETED",
+      "description": "Hybrid RRF top-15 reranked by cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "metrics": {
+        "precision_at_5": 0.5467,
+        "recall_at_5": 0.8667,
+        "mrr": 0.9556,
+        "numerical_correctness": 1.0,
+        "semantic_grounding": 1.0,
+        "abstention_accuracy": 1.0,
+        "avg_latency_ms": 160.67,
+        "total_queries_evaluated": 20
+      }
+    },
+    "6_BGE_Dense_FAISS": {
+      "status": "COMPLETED",
+      "description": "BAAI/bge-small-en-v1.5 (384-d) with FAISS IndexFlatIP",
+      "metrics": {
+        "precision_at_5": 0.5333,
+        "recall_at_5": 0.8533,
+        "mrr": 0.9556,
+        "numerical_correctness": 1.0,
+        "semantic_grounding": 1.0,
+        "abstention_accuracy": 1.0,
+        "avg_latency_ms": 41.15,
+        "total_queries_evaluated": 20
+      }
+    }
+  },
+  "detailed_outputs": {
+    "1_Baseline_Rule_Matcher": [
+      {
+        "query": "What is the total revenue across all records?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.9038000134751201,
+        "query_id": "A-01"
+      },
+      {
+        "query": "What is the total net profit and overall profit margin?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.33140007872134447,
+        "query_id": "A-02"
+      },
+      {
+        "query": "What is the total revenue generated in the North region?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.3157000755891204,
+        "query_id": "A-03"
+      },
+      {
+        "query": "What is the total revenue for the Electronics category?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.2823000540956855,
+        "query_id": "A-04"
+      },
+      {
+        "query": "What is the total revenue from customer ABC Corp?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.24359999224543571,
+        "query_id": "A-05"
+      },
+      {
+        "query": "What is the average revenue per transaction?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.23740006145089865,
+        "query_id": "A-06"
+      },
+      {
+        "query": "How many total orders were placed across all transactions?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The aggregate sum for numeric column 'orders' is **203.00**.",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.2885999856516719,
+        "query_id": "A-07"
+      },
+      {
+        "query": "What is the total revenue for the Bangalore region?",
+        "dataset_key": "enterprise_sales",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$730,000.00** with aggregate net profit at **$275,000.00** (gross margin: **37.67%**).",
+        "sources": [
+          "Dataset: enterprise_sales",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.4072999581694603,
+        "query_id": "A-08"
+      },
+      {
+        "query": "Which customer generated the single highest revenue sale, and for which product?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.33119996078312397,
+        "query_id": "R-01"
+      },
+      {
+        "query": "What products did RetailOne purchase and in which regions?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Categorical column 'region' contains **4** unique groups. The most frequent category is **'North'**.",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 1.5728999860584736,
+        "query_id": "R-02"
+      },
+      {
+        "query": "Which customer purchased a Printer, and what was the profit on that sale?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.35089999437332153,
+        "query_id": "R-03"
+      },
+      {
+        "query": "What are the details of the purchase made by OfficeHub?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset does not contain sufficient information to answer this question.",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.1767999492585659,
+        "query_id": "R-04"
+      },
+      {
+        "query": "What was the revenue and category for Omega Ventures in Hyderabad?",
+        "dataset_key": "enterprise_sales",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$730,000.00** with aggregate net profit at **$275,000.00** (gross margin: **37.67%**).",
+        "sources": [
+          "Dataset: enterprise_sales",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.2476000227034092,
+        "query_id": "R-05"
+      },
+      {
+        "query": "What is the email address and department for student EMP001 (Sumanth)?",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset does not contain student marks/GPA information.",
+        "sources": [
+          "Dataset: student_data",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.24670001585036516,
+        "query_id": "R-06"
+      },
+      {
+        "query": "Find the record for student Kavya (EMP042) and report experience and salary.",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset does not contain student marks/GPA information.",
+        "sources": [
+          "Dataset: student_data",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.0849999487400055,
+        "query_id": "R-07"
+      },
+      {
+        "query": "What is the average student GPA or exam score?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset does not contain student marks/GPA information.",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.16689999029040337,
+        "query_id": "U-01"
+      },
+      {
+        "query": "What is the average student GPA or exam marks in CSE?",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset does not contain student marks/GPA information.",
+        "sources": [
+          "Dataset: student_data",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.07770000956952572,
+        "query_id": "U-02"
+      },
+      {
+        "query": "What was the shipping cost or courier fee for the Laptop order?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset does not contain sufficient information to answer this question.",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.16160006634891033,
+        "query_id": "U-03"
+      },
+      {
+        "query": "What is the total revenue for the EMEA or European region?",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Based on the **Sales/Finance** dataset context, total tracked revenue reaches **$67,300.00** with aggregate net profit at **$14,730.00** (gross margin: **21.89%**).",
+        "sources": [
+          "Dataset: sample_business_dataset",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.6001000292599201,
+        "query_id": "U-04"
+      },
+      {
+        "query": "What is the employee turnover rate and satisfaction score?",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset does not contain student marks/GPA information.",
+        "sources": [
+          "Dataset: student_data",
+          "Grounding Validator Checked"
+        ],
+        "retrieved_indices": [],
+        "latency_ms": 0.11020002420991659,
+        "query_id": "U-05"
+      }
+    ],
+    "2_Lexical_BM25": [
+      {
+        "query_id": "A-01",
+        "query": "What is the total revenue across all records?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue across all records is **$67,300.00**.",
+        "retrieved_indices": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676
+        ],
+        "latency_ms": 0.35559991374611855
+      },
+      {
+        "query_id": "A-02",
+        "query": "What is the total net profit and overall profit margin?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total net profit is **$14,730.00** with an overall profit margin of **21.89%**.",
+        "retrieved_indices": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353
+        ],
+        "latency_ms": 0.28000003658235073
+      },
+      {
+        "query_id": "A-03",
+        "query": "What is the total revenue generated in the North region?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue generated in the North region is **$33,200.00**.",
+        "retrieved_indices": [
+          0,
+          4,
+          8,
+          2,
+          3
+        ],
+        "retrieved_scores": [
+          1.224730175114218,
+          1.224730175114218,
+          1.224730175114218,
+          0.09407253469941353,
+          0.09407253469941353
+        ],
+        "latency_ms": 4.523899988271296
+      },
+      {
+        "query_id": "A-04",
+        "query": "What is the total revenue for the Electronics category?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue for Electronics category is **$51,000.00**.",
+        "retrieved_indices": [
+          0,
+          1,
+          4,
+          8,
+          9
+        ],
+        "retrieved_scores": [
+          0.7776520068762117,
+          0.7776520068762117,
+          0.7776520068762117,
+          0.7776520068762117,
+          0.7776520068762117
+        ],
+        "latency_ms": 2.111499896273017
+      },
+      {
+        "query_id": "A-05",
+        "query": "What is the total revenue from customer ABC Corp?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue from customer ABC Corp is **$18,200.00**.",
+        "retrieved_indices": [
+          0,
+          4,
+          2,
+          3,
+          5
+        ],
+        "retrieved_scores": [
+          3.0230690865584293,
+          3.0230690865584293,
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353
+        ],
+        "latency_ms": 1.0266000172123313
+      },
+      {
+        "query_id": "A-06",
+        "query": "What is the average revenue per transaction?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Average revenue per transaction is **$6,730.00**.",
+        "retrieved_indices": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676
+        ],
+        "latency_ms": 0.265000038780272
+      },
+      {
+        "query_id": "A-07",
+        "query": "How many total orders were placed across all transactions?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total orders placed across all transactions is **203**.",
+        "retrieved_indices": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676,
+          0.04703626734970676
+        ],
+        "latency_ms": 0.18039997667074203
+      },
+      {
+        "query_id": "A-08",
+        "query": "What is the total revenue for the Bangalore region?",
+        "category": "structured_analytical",
+        "dataset_key": "enterprise_sales",
+        "answer": "Total revenue for the Bangalore region is **$408,000.00**.",
+        "retrieved_indices": [
+          0,
+          2,
+          4,
+          1,
+          3
+        ],
+        "retrieved_scores": [
+          0.7130192547119465,
+          0.7130192547119465,
+          0.7130192547119465,
+          0.17402275397925937,
+          0.17402275397925937
+        ],
+        "latency_ms": 0.8458999218419194
+      },
+      {
+        "query_id": "R-01",
+        "query": "Which customer generated the single highest revenue sale, and for which product?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The single highest revenue sale was made by **Global Inc** for **Laptop** in the North region generating **$15,000.00** revenue.",
+        "retrieved_indices": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          0.1411088020491203,
+          0.1411088020491203,
+          0.1411088020491203,
+          0.1411088020491203,
+          0.1411088020491203
+        ],
+        "latency_ms": 0.15600002370774746
+      },
+      {
+        "query_id": "R-02",
+        "query": "What products did RetailOne purchase and in which regions?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "RetailOne purchased **Keyboard** (in East region for $1,800) and **Mouse** (in West region for $1,500).",
+        "retrieved_indices": [
+          6,
+          7,
+          0,
+          1,
+          2
+        ],
+        "retrieved_scores": [
+          1.4980465148678874,
+          1.4980465148678874,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "latency_ms": 0.112400040961802
+      },
+      {
+        "query_id": "R-03",
+        "query": "Which customer purchased a Printer, and what was the profit on that sale?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The customer who purchased a Printer was **TechMart** (Office category in South region), yielding **$900.00** profit.",
+        "retrieved_indices": [
+          5,
+          2,
+          3,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          2.1086135150273653,
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353
+        ],
+        "latency_ms": 0.11909997556358576
+      },
+      {
+        "query_id": "R-04",
+        "query": "What are the details of the purchase made by OfficeHub?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Purchase details for OfficeHub: Purchased **Desk** (Furniture) on 2026-02-15 in West region with **$5,400.00** revenue, **$1,200.00** profit, and 12 orders.",
+        "retrieved_indices": [
+          3,
+          0,
+          1,
+          2,
+          4
+        ],
+        "retrieved_scores": [
+          2.014540980327952,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "latency_ms": 0.10439998004585505
+      },
+      {
+        "query_id": "R-05",
+        "query": "What was the revenue and category for Omega Ventures in Hyderabad?",
+        "category": "semantic_retrieval",
+        "dataset_key": "enterprise_sales",
+        "answer": "Omega Ventures in Hyderabad generated **$172,000.00** revenue in the **SaaS** category (Profit: $68,000).",
+        "retrieved_indices": [
+          3,
+          1,
+          0,
+          2,
+          4
+        ],
+        "retrieved_scores": [
+          3.8220802135729404,
+          1.0494914913331592,
+          0.17402275397925937,
+          0.17402275397925937,
+          0.17402275397925937
+        ],
+        "latency_ms": 0.11779996566474438
+      },
+      {
+        "query_id": "R-06",
+        "query": "What is the email address and department for student EMP001 (Sumanth)?",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student EMP001 (Sumanth) is in department **CSE** with email address **sumanth@gmail.com**.",
+        "retrieved_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "retrieved_scores": [
+          8.593575306254,
+          0.02955688932903492,
+          0.02955688932903492,
+          0.02955688932903492,
+          0.02955688932903492
+        ],
+        "latency_ms": 0.1305999467149377
+      },
+      {
+        "query_id": "R-07",
+        "query": "Find the record for student Kavya (EMP042) and report experience and salary.",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student Kavya (EMP042): Department CSE, experience **46 years**, salary **51LPA**, email kavya42@gmail.com.",
+        "retrieved_indices": [
+          41,
+          0,
+          1,
+          2,
+          3
+        ],
+        "retrieved_scores": [
+          7.092130235004371,
+          0.03940918577204656,
+          0.03940918577204656,
+          0.03940918577204656,
+          0.03940918577204656
+        ],
+        "latency_ms": 0.1305999467149377
+      },
+      {
+        "query_id": "U-01",
+        "query": "What is the average student GPA or exam score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the average student GPA or exam score?'.",
+        "retrieved_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "retrieved_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "latency_ms": 0.09580003097653389
+      },
+      {
+        "query_id": "U-02",
+        "query": "What is the average student GPA or exam marks in CSE?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the average student GPA or exam marks in CSE?'.",
+        "retrieved_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "retrieved_scores": [
+          0.01970459288602328,
+          0.01970459288602328,
+          0.01970459288602328,
+          0.01970459288602328,
+          0.01970459288602328
+        ],
+        "latency_ms": 0.0934000127017498
+      },
+      {
+        "query_id": "U-03",
+        "query": "What was the shipping cost or courier fee for the Laptop order?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What was the shipping cost or courier fee for the Laptop order?'.",
+        "retrieved_indices": [
+          0,
+          8,
+          1,
+          2,
+          3
+        ],
+        "retrieved_scores": [
+          1.465519570033603,
+          1.465519570033603,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "latency_ms": 0.09570003021508455
+      },
+      {
+        "query_id": "U-04",
+        "query": "What is the total revenue for the EMEA or European region?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the total revenue for the EMEA or European region?'.",
+        "retrieved_indices": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353,
+          0.09407253469941353
+        ],
+        "latency_ms": 0.10219996329396963
+      },
+      {
+        "query_id": "U-05",
+        "query": "What is the employee turnover rate and satisfaction score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the employee turnover rate and satisfaction score?'.",
+        "retrieved_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "retrieved_scores": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "latency_ms": 0.06130000110715628
+      }
+    ],
+    "3_Dense_MiniLM_FAISS": [
+      {
+        "query_id": "A-01",
+        "query": "What is the total revenue across all records?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue across all records is **$67,300.00**.",
+        "retrieved_indices": [
+          4,
+          0,
+          5,
+          3,
+          8
+        ],
+        "retrieved_scores": [
+          0.5536313056945801,
+          0.5465636253356934,
+          0.5220876932144165,
+          0.5139331817626953,
+          0.5117805004119873
+        ],
+        "latency_ms": 14.975800062529743
+      },
+      {
+        "query_id": "A-02",
+        "query": "What is the total net profit and overall profit margin?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total net profit is **$14,730.00** with an overall profit margin of **21.89%**.",
+        "retrieved_indices": [
+          0,
+          8,
+          4,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          0.37049293518066406,
+          0.3586987257003784,
+          0.3435666859149933,
+          0.31868550181388855,
+          0.31271451711654663
+        ],
+        "latency_ms": 16.00859989412129
+      },
+      {
+        "query_id": "A-03",
+        "query": "What is the total revenue generated in the North region?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue generated in the North region is **$33,200.00**.",
+        "retrieved_indices": [
+          4,
+          8,
+          0,
+          3,
+          2
+        ],
+        "retrieved_scores": [
+          0.41968658566474915,
+          0.4027792811393738,
+          0.3913603723049164,
+          0.3784288763999939,
+          0.36995720863342285
+        ],
+        "latency_ms": 17.258699983358383
+      },
+      {
+        "query_id": "A-04",
+        "query": "What is the total revenue for the Electronics category?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue for Electronics category is **$51,000.00**.",
+        "retrieved_indices": [
+          8,
+          0,
+          4,
+          6,
+          9
+        ],
+        "retrieved_scores": [
+          0.60882967710495,
+          0.5924835205078125,
+          0.5624955892562866,
+          0.5313249826431274,
+          0.5293805003166199
+        ],
+        "latency_ms": 17.48269994277507
+      },
+      {
+        "query_id": "A-05",
+        "query": "What is the total revenue from customer ABC Corp?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue from customer ABC Corp is **$18,200.00**.",
+        "retrieved_indices": [
+          4,
+          0,
+          8,
+          3,
+          9
+        ],
+        "retrieved_scores": [
+          0.5854119062423706,
+          0.567712128162384,
+          0.4844183325767517,
+          0.48314571380615234,
+          0.4641455411911011
+        ],
+        "latency_ms": 14.845300000160933
+      },
+      {
+        "query_id": "A-06",
+        "query": "What is the average revenue per transaction?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Average revenue per transaction is **$6,730.00**.",
+        "retrieved_indices": [
+          4,
+          0,
+          8,
+          6,
+          3
+        ],
+        "retrieved_scores": [
+          0.4218471050262451,
+          0.4206807613372803,
+          0.41632115840911865,
+          0.3998972773551941,
+          0.3899400234222412
+        ],
+        "latency_ms": 16.185299959033728
+      },
+      {
+        "query_id": "A-07",
+        "query": "How many total orders were placed across all transactions?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total orders placed across all transactions is **203**.",
+        "retrieved_indices": [
+          4,
+          0,
+          7,
+          8,
+          6
+        ],
+        "retrieved_scores": [
+          0.40540677309036255,
+          0.3837246298789978,
+          0.3804017901420593,
+          0.38039228320121765,
+          0.3753553032875061
+        ],
+        "latency_ms": 18.85320001747459
+      },
+      {
+        "query_id": "A-08",
+        "query": "What is the total revenue for the Bangalore region?",
+        "category": "structured_analytical",
+        "dataset_key": "enterprise_sales",
+        "answer": "Total revenue for the Bangalore region is **$408,000.00**.",
+        "retrieved_indices": [
+          4,
+          2,
+          0,
+          1,
+          3
+        ],
+        "retrieved_scores": [
+          0.617011547088623,
+          0.6113107800483704,
+          0.5985347628593445,
+          0.4537837505340576,
+          0.3998934328556061
+        ],
+        "latency_ms": 17.63420004863292
+      },
+      {
+        "query_id": "R-01",
+        "query": "Which customer generated the single highest revenue sale, and for which product?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The single highest revenue sale was made by **Global Inc** for **Laptop** in the North region generating **$15,000.00** revenue.",
+        "retrieved_indices": [
+          0,
+          8,
+          4,
+          7,
+          6
+        ],
+        "retrieved_scores": [
+          0.4625272750854492,
+          0.4569857716560364,
+          0.44154930114746094,
+          0.44003885984420776,
+          0.4284788966178894
+        ],
+        "latency_ms": 17.11730007082224
+      },
+      {
+        "query_id": "R-02",
+        "query": "What products did RetailOne purchase and in which regions?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "RetailOne purchased **Keyboard** (in East region for $1,800) and **Mouse** (in West region for $1,500).",
+        "retrieved_indices": [
+          7,
+          6,
+          8,
+          4,
+          0
+        ],
+        "retrieved_scores": [
+          0.4419559836387634,
+          0.4170979857444763,
+          0.3898220658302307,
+          0.3639037013053894,
+          0.36189961433410645
+        ],
+        "latency_ms": 16.889099963009357
+      },
+      {
+        "query_id": "R-03",
+        "query": "Which customer purchased a Printer, and what was the profit on that sale?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The customer who purchased a Printer was **TechMart** (Office category in South region), yielding **$900.00** profit.",
+        "retrieved_indices": [
+          5,
+          0,
+          7,
+          8,
+          6
+        ],
+        "retrieved_scores": [
+          0.5110135674476624,
+          0.4525337219238281,
+          0.4386023283004761,
+          0.4339750409126282,
+          0.4301488399505615
+        ],
+        "latency_ms": 16.79409993812442
+      },
+      {
+        "query_id": "R-04",
+        "query": "What are the details of the purchase made by OfficeHub?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Purchase details for OfficeHub: Purchased **Desk** (Furniture) on 2026-02-15 in West region with **$5,400.00** revenue, **$1,200.00** profit, and 12 orders.",
+        "retrieved_indices": [
+          3,
+          2,
+          0,
+          8,
+          4
+        ],
+        "retrieved_scores": [
+          0.5819941759109497,
+          0.4170684218406677,
+          0.38854122161865234,
+          0.373970091342926,
+          0.37269821763038635
+        ],
+        "latency_ms": 15.865399967879057
+      },
+      {
+        "query_id": "R-05",
+        "query": "What was the revenue and category for Omega Ventures in Hyderabad?",
+        "category": "semantic_retrieval",
+        "dataset_key": "enterprise_sales",
+        "answer": "Omega Ventures in Hyderabad generated **$172,000.00** revenue in the **SaaS** category (Profit: $68,000).",
+        "retrieved_indices": [
+          3,
+          1,
+          2,
+          4,
+          0
+        ],
+        "retrieved_scores": [
+          0.7803580164909363,
+          0.5612167716026306,
+          0.4728820025920868,
+          0.45464640855789185,
+          0.4422951936721802
+        ],
+        "latency_ms": 40.336100035347044
+      },
+      {
+        "query_id": "R-06",
+        "query": "What is the email address and department for student EMP001 (Sumanth)?",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student EMP001 (Sumanth) is in department **CSE** with email address **sumanth@gmail.com**.",
+        "retrieved_indices": [
+          0,
+          13,
+          9,
+          1,
+          12
+        ],
+        "retrieved_scores": [
+          0.6427294015884399,
+          0.6227105259895325,
+          0.6159906387329102,
+          0.6152368187904358,
+          0.6090063452720642
+        ],
+        "latency_ms": 23.71450001373887
+      },
+      {
+        "query_id": "R-07",
+        "query": "Find the record for student Kavya (EMP042) and report experience and salary.",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student Kavya (EMP042): Department CSE, experience **46 years**, salary **51LPA**, email kavya42@gmail.com.",
+        "retrieved_indices": [
+          41,
+          27,
+          3,
+          10,
+          20
+        ],
+        "retrieved_scores": [
+          0.6292792558670044,
+          0.5937942266464233,
+          0.5807734131813049,
+          0.5802688002586365,
+          0.5738809108734131
+        ],
+        "latency_ms": 24.461699998937547
+      },
+      {
+        "query_id": "U-01",
+        "query": "What is the average student GPA or exam score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the average student GPA or exam score?'.",
+        "retrieved_indices": [
+          8,
+          6,
+          2,
+          4,
+          3
+        ],
+        "retrieved_scores": [
+          0.0726500153541565,
+          0.06844417750835419,
+          0.058941084891557693,
+          0.04927033931016922,
+          0.04405982419848442
+        ],
+        "latency_ms": 15.78060002066195
+      },
+      {
+        "query_id": "U-02",
+        "query": "What is the average student GPA or exam marks in CSE?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the average student GPA or exam marks in CSE?'.",
+        "retrieved_indices": [
+          32,
+          28,
+          29,
+          13,
+          37
+        ],
+        "retrieved_scores": [
+          0.3232959806919098,
+          0.31957292556762695,
+          0.3144409954547882,
+          0.30782291293144226,
+          0.30583563446998596
+        ],
+        "latency_ms": 18.308899947442114
+      },
+      {
+        "query_id": "U-03",
+        "query": "What was the shipping cost or courier fee for the Laptop order?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What was the shipping cost or courier fee for the Laptop order?'.",
+        "retrieved_indices": [
+          8,
+          0,
+          7,
+          6,
+          9
+        ],
+        "retrieved_scores": [
+          0.4391876459121704,
+          0.384971022605896,
+          0.3692699372768402,
+          0.3493213951587677,
+          0.33926892280578613
+        ],
+        "latency_ms": 14.395599951967597
+      },
+      {
+        "query_id": "U-04",
+        "query": "What is the total revenue for the EMEA or European region?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the total revenue for the EMEA or European region?'.",
+        "retrieved_indices": [
+          8,
+          6,
+          2,
+          0,
+          4
+        ],
+        "retrieved_scores": [
+          0.4428480565547943,
+          0.3909311294555664,
+          0.39062392711639404,
+          0.3803447484970093,
+          0.3785853981971741
+        ],
+        "latency_ms": 15.22649999242276
+      },
+      {
+        "query_id": "U-05",
+        "query": "What is the employee turnover rate and satisfaction score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the employee turnover rate and satisfaction score?'.",
+        "retrieved_indices": [
+          48,
+          32,
+          37,
+          49,
+          3
+        ],
+        "retrieved_scores": [
+          0.25204285979270935,
+          0.2421300709247589,
+          0.2359265238046646,
+          0.22494439780712128,
+          0.22370554506778717
+        ],
+        "latency_ms": 14.265100006014109
+      }
+    ],
+    "4_Hybrid_RRF": [
+      {
+        "query_id": "A-01",
+        "query": "What is the total revenue across all records?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue across all records is **$67,300.00**.",
+        "retrieved_indices": [
+          3,
+          5,
+          0,
+          4,
+          6
+        ],
+        "retrieved_scores": [
+          0.031754032258064516,
+          0.031746031746031744,
+          0.03128054740957967,
+          0.031099324975891997,
+          0.030776515151515152
+        ],
+        "latency_ms": 16.070200013928115
+      },
+      {
+        "query_id": "A-02",
+        "query": "What is the total net profit and overall profit margin?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total net profit is **$14,730.00** with an overall profit margin of **21.89%**.",
+        "retrieved_indices": [
+          0,
+          2,
+          3,
+          6,
+          7
+        ],
+        "retrieved_scores": [
+          0.031544957774465976,
+          0.03131881575727918,
+          0.03128054740957967,
+          0.03125,
+          0.03076923076923077
+        ],
+        "latency_ms": 16.94530004169792
+      },
+      {
+        "query_id": "A-03",
+        "query": "What is the total revenue generated in the North region?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue generated in the North region is **$33,200.00**.",
+        "retrieved_indices": [
+          4,
+          0,
+          8,
+          3,
+          2
+        ],
+        "retrieved_scores": [
+          0.03252247488101534,
+          0.032266458495966696,
+          0.03200204813108039,
+          0.031009615384615385,
+          0.031009615384615385
+        ],
+        "latency_ms": 17.968099913559854
+      },
+      {
+        "query_id": "A-04",
+        "query": "What is the total revenue for the Electronics category?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue for Electronics category is **$51,000.00**.",
+        "retrieved_indices": [
+          0,
+          8,
+          4,
+          1,
+          9
+        ],
+        "retrieved_scores": [
+          0.03252247488101534,
+          0.032018442622950824,
+          0.031746031746031744,
+          0.031054405392392875,
+          0.03076923076923077
+        ],
+        "latency_ms": 15.330299967899919
+      },
+      {
+        "query_id": "A-05",
+        "query": "What is the total revenue from customer ABC Corp?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue from customer ABC Corp is **$18,200.00**.",
+        "retrieved_indices": [
+          4,
+          0,
+          3,
+          2,
+          8
+        ],
+        "retrieved_scores": [
+          0.03252247488101534,
+          0.03252247488101534,
+          0.03125,
+          0.031024531024531024,
+          0.03036576949620428
+        ],
+        "latency_ms": 18.925699987448752
+      },
+      {
+        "query_id": "A-06",
+        "query": "What is the average revenue per transaction?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Average revenue per transaction is **$6,730.00**.",
+        "retrieved_indices": [
+          3,
+          0,
+          6,
+          4,
+          2
+        ],
+        "retrieved_scores": [
+          0.0315136476426799,
+          0.03128054740957967,
+          0.03125,
+          0.031099324975891997,
+          0.030886196246139225
+        ],
+        "latency_ms": 14.815800008364022
+      },
+      {
+        "query_id": "A-07",
+        "query": "How many total orders were placed across all transactions?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total orders placed across all transactions is **203**.",
+        "retrieved_indices": [
+          0,
+          7,
+          4,
+          3,
+          6
+        ],
+        "retrieved_scores": [
+          0.03128054740957967,
+          0.03125763125763126,
+          0.031099324975891997,
+          0.031054405392392875,
+          0.031009615384615385
+        ],
+        "latency_ms": 16.132100019603968
+      },
+      {
+        "query_id": "A-08",
+        "query": "What is the total revenue for the Bangalore region?",
+        "category": "structured_analytical",
+        "dataset_key": "enterprise_sales",
+        "answer": "Total revenue for the Bangalore region is **$408,000.00**.",
+        "retrieved_indices": [
+          4,
+          0,
+          2,
+          1,
+          3
+        ],
+        "retrieved_scores": [
+          0.032266458495966696,
+          0.032266458495966696,
+          0.03225806451612903,
+          0.03125,
+          0.03076923076923077
+        ],
+        "latency_ms": 16.40449999831617
+      },
+      {
+        "query_id": "R-01",
+        "query": "Which customer generated the single highest revenue sale, and for which product?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The single highest revenue sale was made by **Global Inc** for **Laptop** in the North region generating **$15,000.00** revenue.",
+        "retrieved_indices": [
+          0,
+          2,
+          3,
+          7,
+          6
+        ],
+        "retrieved_scores": [
+          0.031544957774465976,
+          0.031099324975891997,
+          0.031054405392392875,
+          0.031009615384615385,
+          0.031009615384615385
+        ],
+        "latency_ms": 19.157900009304285
+      },
+      {
+        "query_id": "R-02",
+        "query": "What products did RetailOne purchase and in which regions?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "RetailOne purchased **Keyboard** (in East region for $1,800) and **Mouse** (in West region for $1,500).",
+        "retrieved_indices": [
+          7,
+          6,
+          0,
+          4,
+          1
+        ],
+        "retrieved_scores": [
+          0.03252247488101534,
+          0.03252247488101534,
+          0.03125763125763126,
+          0.03055037313432836,
+          0.03055037313432836
+        ],
+        "latency_ms": 16.9483000645414
+      },
+      {
+        "query_id": "R-03",
+        "query": "Which customer purchased a Printer, and what was the profit on that sale?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The customer who purchased a Printer was **TechMart** (Office category in South region), yielding **$900.00** profit.",
+        "retrieved_indices": [
+          5,
+          0,
+          7,
+          6,
+          2
+        ],
+        "retrieved_scores": [
+          0.03278688524590164,
+          0.03128054740957967,
+          0.03125763125763126,
+          0.031009615384615385,
+          0.030834914611005692
+        ],
+        "latency_ms": 16.389099997468293
+      },
+      {
+        "query_id": "R-04",
+        "query": "What are the details of the purchase made by OfficeHub?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Purchase details for OfficeHub: Purchased **Desk** (Furniture) on 2026-02-15 in West region with **$5,400.00** revenue, **$1,200.00** profit, and 12 orders.",
+        "retrieved_indices": [
+          3,
+          0,
+          2,
+          4,
+          5
+        ],
+        "retrieved_scores": [
+          0.03278688524590164,
+          0.03200204813108039,
+          0.031754032258064516,
+          0.03076923076923077,
+          0.030303030303030304
+        ],
+        "latency_ms": 15.980200027115643
+      },
+      {
+        "query_id": "R-05",
+        "query": "What was the revenue and category for Omega Ventures in Hyderabad?",
+        "category": "semantic_retrieval",
+        "dataset_key": "enterprise_sales",
+        "answer": "Omega Ventures in Hyderabad generated **$172,000.00** revenue in the **SaaS** category (Profit: $68,000).",
+        "retrieved_indices": [
+          3,
+          1,
+          2,
+          0,
+          4
+        ],
+        "retrieved_scores": [
+          0.03278688524590164,
+          0.03225806451612903,
+          0.03149801587301587,
+          0.03125763125763126,
+          0.031009615384615385
+        ],
+        "latency_ms": 14.195699943229556
+      },
+      {
+        "query_id": "R-06",
+        "query": "What is the email address and department for student EMP001 (Sumanth)?",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student EMP001 (Sumanth) is in department **CSE** with email address **sumanth@gmail.com**.",
+        "retrieved_indices": [
+          0,
+          1,
+          9,
+          2,
+          13
+        ],
+        "retrieved_scores": [
+          0.03278688524590164,
+          0.031754032258064516,
+          0.030158730158730156,
+          0.029957522915269395,
+          0.02964254577157803
+        ],
+        "latency_ms": 16.836399910971522
+      },
+      {
+        "query_id": "R-07",
+        "query": "Find the record for student Kavya (EMP042) and report experience and salary.",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student Kavya (EMP042): Department CSE, experience **46 years**, salary **51LPA**, email kavya42@gmail.com.",
+        "retrieved_indices": [
+          41,
+          3,
+          1,
+          2,
+          10
+        ],
+        "retrieved_scores": [
+          0.03278688524590164,
+          0.03125763125763126,
+          0.03057889822595705,
+          0.029910714285714284,
+          0.029513888888888888
+        ],
+        "latency_ms": 16.771199996583164
+      },
+      {
+        "query_id": "U-01",
+        "query": "What is the average student GPA or exam score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the average student GPA or exam score?'.",
+        "retrieved_indices": [
+          2,
+          0,
+          6,
+          4,
+          3
+        ],
+        "retrieved_scores": [
+          0.031746031746031744,
+          0.03131881575727918,
+          0.031054405392392875,
+          0.031009615384615385,
+          0.031009615384615385
+        ],
+        "latency_ms": 15.008200076408684
+      },
+      {
+        "query_id": "U-02",
+        "query": "What is the average student GPA or exam marks in CSE?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the average student GPA or exam marks in CSE?'.",
+        "retrieved_indices": [
+          2,
+          13,
+          10,
+          11,
+          32
+        ],
+        "retrieved_scores": [
+          0.03036576949620428,
+          0.029138513513513514,
+          0.028370221327967807,
+          0.027402402402402402,
+          0.01639344262295082
+        ],
+        "latency_ms": 16.619800007902086
+      },
+      {
+        "query_id": "U-03",
+        "query": "What was the shipping cost or courier fee for the Laptop order?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What was the shipping cost or courier fee for the Laptop order?'.",
+        "retrieved_indices": [
+          8,
+          0,
+          1,
+          7,
+          6
+        ],
+        "retrieved_scores": [
+          0.03252247488101534,
+          0.03252247488101534,
+          0.03057889822595705,
+          0.03036576949620428,
+          0.030330882352941176
+        ],
+        "latency_ms": 16.772200004197657
+      },
+      {
+        "query_id": "U-04",
+        "query": "What is the total revenue for the EMEA or European region?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the total revenue for the EMEA or European region?'.",
+        "retrieved_indices": [
+          2,
+          6,
+          3,
+          8,
+          0
+        ],
+        "retrieved_scores": [
+          0.032266458495966696,
+          0.031754032258064516,
+          0.031054405392392875,
+          0.030886196246139225,
+          0.030776515151515152
+        ],
+        "latency_ms": 14.914799947291613
+      },
+      {
+        "query_id": "U-05",
+        "query": "What is the employee turnover rate and satisfaction score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the employee turnover rate and satisfaction score?'.",
+        "retrieved_indices": [
+          0,
+          3,
+          11,
+          4,
+          14
+        ],
+        "retrieved_scores": [
+          0.03131881575727918,
+          0.031009615384615385,
+          0.02904040404040404,
+          0.0288981288981289,
+          0.02782608695652174
+        ],
+        "latency_ms": 14.96559998486191
+      }
+    ],
+    "5_CrossEncoder_Rerank": [
+      {
+        "query_id": "A-01",
+        "query": "What is the total revenue across all records?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue across all records is **$67,300.00**.",
+        "retrieved_indices": [
+          3,
+          2,
+          7,
+          8,
+          6
+        ],
+        "retrieved_scores": [
+          -7.040738105773926,
+          -7.293790817260742,
+          -7.327932357788086,
+          -7.349612712860107,
+          -7.506797790527344
+        ],
+        "latency_ms": 135.64660004340112
+      },
+      {
+        "query_id": "A-02",
+        "query": "What is the total net profit and overall profit margin?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total net profit is **$14,730.00** with an overall profit margin of **21.89%**.",
+        "retrieved_indices": [
+          7,
+          6,
+          8,
+          3,
+          2
+        ],
+        "retrieved_scores": [
+          -8.914713859558105,
+          -8.979381561279297,
+          -9.121580123901367,
+          -9.198504447937012,
+          -9.375067710876465
+        ],
+        "latency_ms": 127.00909993145615
+      },
+      {
+        "query_id": "A-03",
+        "query": "What is the total revenue generated in the North region?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue generated in the North region is **$33,200.00**.",
+        "retrieved_indices": [
+          8,
+          4,
+          0,
+          3,
+          7
+        ],
+        "retrieved_scores": [
+          -1.2184584140777588,
+          -1.8719303607940674,
+          -1.9855684041976929,
+          -7.976679801940918,
+          -8.294881820678711
+        ],
+        "latency_ms": 134.63760004378855
+      },
+      {
+        "query_id": "A-04",
+        "query": "What is the total revenue for the Electronics category?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue for Electronics category is **$51,000.00**.",
+        "retrieved_indices": [
+          8,
+          4,
+          0,
+          1,
+          9
+        ],
+        "retrieved_scores": [
+          1.598102331161499,
+          0.5908700823783875,
+          0.15962350368499756,
+          0.03512081503868103,
+          -0.11553478986024857
+        ],
+        "latency_ms": 125.1622000709176
+      },
+      {
+        "query_id": "A-05",
+        "query": "What is the total revenue from customer ABC Corp?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue from customer ABC Corp is **$18,200.00**.",
+        "retrieved_indices": [
+          4,
+          0,
+          3,
+          8,
+          7
+        ],
+        "retrieved_scores": [
+          6.089263916015625,
+          5.635550022125244,
+          -4.129434108734131,
+          -4.665058135986328,
+          -4.890408515930176
+        ],
+        "latency_ms": 126.05249998159707
+      },
+      {
+        "query_id": "A-06",
+        "query": "What is the average revenue per transaction?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Average revenue per transaction is **$6,730.00**.",
+        "retrieved_indices": [
+          3,
+          2,
+          7,
+          8,
+          6
+        ],
+        "retrieved_scores": [
+          -9.599029541015625,
+          -9.611144065856934,
+          -9.743648529052734,
+          -9.843545913696289,
+          -9.928866386413574
+        ],
+        "latency_ms": 121.52120005339384
+      },
+      {
+        "query_id": "A-07",
+        "query": "How many total orders were placed across all transactions?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total orders placed across all transactions is **203**.",
+        "retrieved_indices": [
+          3,
+          6,
+          7,
+          5,
+          4
+        ],
+        "retrieved_scores": [
+          -7.768085479736328,
+          -7.891982078552246,
+          -8.094696044921875,
+          -8.192083358764648,
+          -8.498296737670898
+        ],
+        "latency_ms": 143.896900000982
+      },
+      {
+        "query_id": "A-08",
+        "query": "What is the total revenue for the Bangalore region?",
+        "category": "structured_analytical",
+        "dataset_key": "enterprise_sales",
+        "answer": "Total revenue for the Bangalore region is **$408,000.00**.",
+        "retrieved_indices": [
+          2,
+          0,
+          4,
+          1,
+          3
+        ],
+        "retrieved_scores": [
+          3.653486490249634,
+          2.94631290435791,
+          2.7552218437194824,
+          -7.063360214233398,
+          -7.271434783935547
+        ],
+        "latency_ms": 78.4545000642538
+      },
+      {
+        "query_id": "R-01",
+        "query": "Which customer generated the single highest revenue sale, and for which product?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The single highest revenue sale was made by **Global Inc** for **Laptop** in the North region generating **$15,000.00** revenue.",
+        "retrieved_indices": [
+          7,
+          6,
+          8,
+          1,
+          2
+        ],
+        "retrieved_scores": [
+          -4.799016952514648,
+          -4.9229302406311035,
+          -4.997745990753174,
+          -5.373775959014893,
+          -5.462604522705078
+        ],
+        "latency_ms": 137.9832000238821
+      },
+      {
+        "query_id": "R-02",
+        "query": "What products did RetailOne purchase and in which regions?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "RetailOne purchased **Keyboard** (in East region for $1,800) and **Mouse** (in West region for $1,500).",
+        "retrieved_indices": [
+          6,
+          7,
+          8,
+          3,
+          2
+        ],
+        "retrieved_scores": [
+          3.317378044128418,
+          3.2800402641296387,
+          -6.4407453536987305,
+          -6.669143199920654,
+          -7.149875640869141
+        ],
+        "latency_ms": 166.6741999797523
+      },
+      {
+        "query_id": "R-03",
+        "query": "Which customer purchased a Printer, and what was the profit on that sale?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The customer who purchased a Printer was **TechMart** (Office category in South region), yielding **$900.00** profit.",
+        "retrieved_indices": [
+          5,
+          7,
+          8,
+          6,
+          1
+        ],
+        "retrieved_scores": [
+          -0.7798926830291748,
+          -6.778506755828857,
+          -6.813344478607178,
+          -6.857263565063477,
+          -6.870841026306152
+        ],
+        "latency_ms": 149.88499996252358
+      },
+      {
+        "query_id": "R-04",
+        "query": "What are the details of the purchase made by OfficeHub?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Purchase details for OfficeHub: Purchased **Desk** (Furniture) on 2026-02-15 in West region with **$5,400.00** revenue, **$1,200.00** profit, and 12 orders.",
+        "retrieved_indices": [
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "retrieved_scores": [
+          -2.108193874359131,
+          -11.10096263885498,
+          -11.275895118713379,
+          -11.278892517089844,
+          -11.32673454284668
+        ],
+        "latency_ms": 212.4811999965459
+      },
+      {
+        "query_id": "R-05",
+        "query": "What was the revenue and category for Omega Ventures in Hyderabad?",
+        "category": "semantic_retrieval",
+        "dataset_key": "enterprise_sales",
+        "answer": "Omega Ventures in Hyderabad generated **$172,000.00** revenue in the **SaaS** category (Profit: $68,000).",
+        "retrieved_indices": [
+          3,
+          1,
+          2,
+          0,
+          4
+        ],
+        "retrieved_scores": [
+          7.371140003204346,
+          1.2022531032562256,
+          -6.154943466186523,
+          -7.106731414794922,
+          -7.210232734680176
+        ],
+        "latency_ms": 97.27779997047037
+      },
+      {
+        "query_id": "R-06",
+        "query": "What is the email address and department for student EMP001 (Sumanth)?",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student EMP001 (Sumanth) is in department **CSE** with email address **sumanth@gmail.com**.",
+        "retrieved_indices": [
+          0,
+          1,
+          2,
+          6,
+          4
+        ],
+        "retrieved_scores": [
+          7.142256736755371,
+          4.389842987060547,
+          3.538963794708252,
+          3.5165836811065674,
+          3.3817648887634277
+        ],
+        "latency_ms": 285.21660005208105
+      },
+      {
+        "query_id": "R-07",
+        "query": "Find the record for student Kavya (EMP042) and report experience and salary.",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student Kavya (EMP042): Department CSE, experience **46 years**, salary **51LPA**, email kavya42@gmail.com.",
+        "retrieved_indices": [
+          41,
+          20,
+          22,
+          30,
+          27
+        ],
+        "retrieved_scores": [
+          6.956939697265625,
+          5.222499847412109,
+          3.642307996749878,
+          3.4974617958068848,
+          3.3496971130371094
+        ],
+        "latency_ms": 301.9607999594882
+      },
+      {
+        "query_id": "U-01",
+        "query": "What is the average student GPA or exam score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the average student GPA or exam score?'.",
+        "retrieved_indices": [
+          8,
+          6,
+          7,
+          4,
+          0
+        ],
+        "retrieved_scores": [
+          -11.253973007202148,
+          -11.260416030883789,
+          -11.262697219848633,
+          -11.270455360412598,
+          -11.28144645690918
+        ],
+        "latency_ms": 140.80130006186664
+      },
+      {
+        "query_id": "U-02",
+        "query": "What is the average student GPA or exam marks in CSE?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the average student GPA or exam marks in CSE?'.",
+        "retrieved_indices": [
+          32,
+          4,
+          37,
+          1,
+          2
+        ],
+        "retrieved_scores": [
+          -4.925118446350098,
+          -5.0325469970703125,
+          -5.095667839050293,
+          -5.2622151374816895,
+          -5.27489709854126
+        ],
+        "latency_ms": 231.28720000386238
+      },
+      {
+        "query_id": "U-03",
+        "query": "What was the shipping cost or courier fee for the Laptop order?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What was the shipping cost or courier fee for the Laptop order?'.",
+        "retrieved_indices": [
+          8,
+          0,
+          6,
+          7,
+          9
+        ],
+        "retrieved_scores": [
+          -6.743434906005859,
+          -7.963237762451172,
+          -10.64220142364502,
+          -10.9536714553833,
+          -10.99339485168457
+        ],
+        "latency_ms": 135.87110000662506
+      },
+      {
+        "query_id": "U-04",
+        "query": "What is the total revenue for the EMEA or European region?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the total revenue for the EMEA or European region?'.",
+        "retrieved_indices": [
+          7,
+          6,
+          8,
+          3,
+          2
+        ],
+        "retrieved_scores": [
+          -9.729076385498047,
+          -9.871014595031738,
+          -9.950580596923828,
+          -10.062166213989258,
+          -10.281024932861328
+        ],
+        "latency_ms": 137.82389997504652
+      },
+      {
+        "query_id": "U-05",
+        "query": "What is the employee turnover rate and satisfaction score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the employee turnover rate and satisfaction score?'.",
+        "retrieved_indices": [
+          32,
+          37,
+          48,
+          5,
+          4
+        ],
+        "retrieved_scores": [
+          -11.137357711791992,
+          -11.213582038879395,
+          -11.234132766723633,
+          -11.234954833984375,
+          -11.262157440185547
+        ],
+        "latency_ms": 223.74070005025715
+      }
+    ],
+    "6_BGE_Dense_FAISS": [
+      {
+        "query_id": "A-01",
+        "query": "What is the total revenue across all records?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue across all records is **$67,300.00**.",
+        "retrieved_indices": [
+          0,
+          5,
+          3,
+          8,
+          2
+        ],
+        "retrieved_scores": [
+          0.6919245719909668,
+          0.6870863437652588,
+          0.6757537722587585,
+          0.674821674823761,
+          0.6733989119529724
+        ],
+        "latency_ms": 33.32439996302128
+      },
+      {
+        "query_id": "A-02",
+        "query": "What is the total net profit and overall profit margin?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total net profit is **$14,730.00** with an overall profit margin of **21.89%**.",
+        "retrieved_indices": [
+          8,
+          0,
+          4,
+          5,
+          7
+        ],
+        "retrieved_scores": [
+          0.6353127956390381,
+          0.6342934370040894,
+          0.6250102519989014,
+          0.6248265504837036,
+          0.6240532398223877
+        ],
+        "latency_ms": 31.216999981552362
+      },
+      {
+        "query_id": "A-03",
+        "query": "What is the total revenue generated in the North region?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue generated in the North region is **$33,200.00**.",
+        "retrieved_indices": [
+          8,
+          4,
+          0,
+          5,
+          3
+        ],
+        "retrieved_scores": [
+          0.6709716320037842,
+          0.6579606533050537,
+          0.6519919037818909,
+          0.6367437243461609,
+          0.6286727786064148
+        ],
+        "latency_ms": 33.57500000856817
+      },
+      {
+        "query_id": "A-04",
+        "query": "What is the total revenue for the Electronics category?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue for Electronics category is **$51,000.00**.",
+        "retrieved_indices": [
+          8,
+          1,
+          0,
+          5,
+          9
+        ],
+        "retrieved_scores": [
+          0.7008395195007324,
+          0.6958185434341431,
+          0.694448709487915,
+          0.6873883008956909,
+          0.6802643537521362
+        ],
+        "latency_ms": 32.42890001274645
+      },
+      {
+        "query_id": "A-05",
+        "query": "What is the total revenue from customer ABC Corp?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total revenue from customer ABC Corp is **$18,200.00**.",
+        "retrieved_indices": [
+          0,
+          4,
+          1,
+          9,
+          5
+        ],
+        "retrieved_scores": [
+          0.791368305683136,
+          0.7876244187355042,
+          0.697563648223877,
+          0.6917594075202942,
+          0.6821927428245544
+        ],
+        "latency_ms": 34.15349998977035
+      },
+      {
+        "query_id": "A-06",
+        "query": "What is the average revenue per transaction?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Average revenue per transaction is **$6,730.00**.",
+        "retrieved_indices": [
+          5,
+          8,
+          0,
+          3,
+          6
+        ],
+        "retrieved_scores": [
+          0.6842362284660339,
+          0.6534101366996765,
+          0.6526156067848206,
+          0.6481215357780457,
+          0.647350013256073
+        ],
+        "latency_ms": 33.05849991738796
+      },
+      {
+        "query_id": "A-07",
+        "query": "How many total orders were placed across all transactions?",
+        "category": "structured_analytical",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Total orders placed across all transactions is **203**.",
+        "retrieved_indices": [
+          7,
+          3,
+          0,
+          2,
+          5
+        ],
+        "retrieved_scores": [
+          0.6613416075706482,
+          0.6440579295158386,
+          0.6385349035263062,
+          0.6380408406257629,
+          0.6351704001426697
+        ],
+        "latency_ms": 32.08230005111545
+      },
+      {
+        "query_id": "A-08",
+        "query": "What is the total revenue for the Bangalore region?",
+        "category": "structured_analytical",
+        "dataset_key": "enterprise_sales",
+        "answer": "Total revenue for the Bangalore region is **$408,000.00**.",
+        "retrieved_indices": [
+          4,
+          2,
+          0,
+          1,
+          3
+        ],
+        "retrieved_scores": [
+          0.7299976348876953,
+          0.7033635377883911,
+          0.6964007616043091,
+          0.6759747266769409,
+          0.633330225944519
+        ],
+        "latency_ms": 34.78790004737675
+      },
+      {
+        "query_id": "R-01",
+        "query": "Which customer generated the single highest revenue sale, and for which product?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The single highest revenue sale was made by **Global Inc** for **Laptop** in the North region generating **$15,000.00** revenue.",
+        "retrieved_indices": [
+          0,
+          1,
+          8,
+          5,
+          6
+        ],
+        "retrieved_scores": [
+          0.6422134637832642,
+          0.636506974697113,
+          0.6359069347381592,
+          0.6289280652999878,
+          0.6284888386726379
+        ],
+        "latency_ms": 51.70940002426505
+      },
+      {
+        "query_id": "R-02",
+        "query": "What products did RetailOne purchase and in which regions?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "RetailOne purchased **Keyboard** (in East region for $1,800) and **Mouse** (in West region for $1,500).",
+        "retrieved_indices": [
+          7,
+          6,
+          1,
+          2,
+          5
+        ],
+        "retrieved_scores": [
+          0.6527737975120544,
+          0.6371887922286987,
+          0.5542874932289124,
+          0.5541868209838867,
+          0.5533978939056396
+        ],
+        "latency_ms": 48.76999999396503
+      },
+      {
+        "query_id": "R-03",
+        "query": "Which customer purchased a Printer, and what was the profit on that sale?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The customer who purchased a Printer was **TechMart** (Office category in South region), yielding **$900.00** profit.",
+        "retrieved_indices": [
+          5,
+          7,
+          6,
+          0,
+          2
+        ],
+        "retrieved_scores": [
+          0.7463683485984802,
+          0.6955849528312683,
+          0.6836979389190674,
+          0.6789633631706238,
+          0.6734930276870728
+        ],
+        "latency_ms": 65.89890003670007
+      },
+      {
+        "query_id": "R-04",
+        "query": "What are the details of the purchase made by OfficeHub?",
+        "category": "semantic_retrieval",
+        "dataset_key": "sample_business_dataset",
+        "answer": "Purchase details for OfficeHub: Purchased **Desk** (Furniture) on 2026-02-15 in West region with **$5,400.00** revenue, **$1,200.00** profit, and 12 orders.",
+        "retrieved_indices": [
+          3,
+          5,
+          2,
+          6,
+          8
+        ],
+        "retrieved_scores": [
+          0.728144645690918,
+          0.6859066486358643,
+          0.66306471824646,
+          0.6513285636901855,
+          0.6474452018737793
+        ],
+        "latency_ms": 53.23069996666163
+      },
+      {
+        "query_id": "R-05",
+        "query": "What was the revenue and category for Omega Ventures in Hyderabad?",
+        "category": "semantic_retrieval",
+        "dataset_key": "enterprise_sales",
+        "answer": "Omega Ventures in Hyderabad generated **$172,000.00** revenue in the **SaaS** category (Profit: $68,000).",
+        "retrieved_indices": [
+          3,
+          1,
+          2,
+          4,
+          0
+        ],
+        "retrieved_scores": [
+          0.8066787123680115,
+          0.6938315629959106,
+          0.6314689517021179,
+          0.6083840727806091,
+          0.6012185215950012
+        ],
+        "latency_ms": 49.37579995021224
+      },
+      {
+        "query_id": "R-06",
+        "query": "What is the email address and department for student EMP001 (Sumanth)?",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student EMP001 (Sumanth) is in department **CSE** with email address **sumanth@gmail.com**.",
+        "retrieved_indices": [
+          0,
+          1,
+          38,
+          46,
+          6
+        ],
+        "retrieved_scores": [
+          0.8905857801437378,
+          0.8064755201339722,
+          0.7769135236740112,
+          0.7759125828742981,
+          0.7684007883071899
+        ],
+        "latency_ms": 50.45109998900443
+      },
+      {
+        "query_id": "R-07",
+        "query": "Find the record for student Kavya (EMP042) and report experience and salary.",
+        "category": "semantic_retrieval",
+        "dataset_key": "student_data",
+        "answer": "Student Kavya (EMP042): Department CSE, experience **46 years**, salary **51LPA**, email kavya42@gmail.com.",
+        "retrieved_indices": [
+          41,
+          20,
+          24,
+          12,
+          27
+        ],
+        "retrieved_scores": [
+          0.8586829900741577,
+          0.7793216109275818,
+          0.7623202800750732,
+          0.7550169229507446,
+          0.7513308525085449
+        ],
+        "latency_ms": 34.523600013926625
+      },
+      {
+        "query_id": "U-01",
+        "query": "What is the average student GPA or exam score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the average student GPA or exam score?'.",
+        "retrieved_indices": [
+          0,
+          6,
+          4,
+          8,
+          5
+        ],
+        "retrieved_scores": [
+          0.48611509799957275,
+          0.4781414568424225,
+          0.46976032853126526,
+          0.4677387475967407,
+          0.4617895185947418
+        ],
+        "latency_ms": 27.781200013123453
+      },
+      {
+        "query_id": "U-02",
+        "query": "What is the average student GPA or exam marks in CSE?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the average student GPA or exam marks in CSE?'.",
+        "retrieved_indices": [
+          16,
+          14,
+          11,
+          28,
+          40
+        ],
+        "retrieved_scores": [
+          0.6242191791534424,
+          0.6238247156143188,
+          0.6236093044281006,
+          0.6211933493614197,
+          0.620933473110199
+        ],
+        "latency_ms": 46.30559997167438
+      },
+      {
+        "query_id": "U-03",
+        "query": "What was the shipping cost or courier fee for the Laptop order?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What was the shipping cost or courier fee for the Laptop order?'.",
+        "retrieved_indices": [
+          8,
+          0,
+          5,
+          7,
+          9
+        ],
+        "retrieved_scores": [
+          0.6636375188827515,
+          0.6500680446624756,
+          0.6329177618026733,
+          0.6133715510368347,
+          0.6110367178916931
+        ],
+        "latency_ms": 41.88069992233068
+      },
+      {
+        "query_id": "U-04",
+        "query": "What is the total revenue for the EMEA or European region?",
+        "category": "unsupported_abstention",
+        "dataset_key": "sample_business_dataset",
+        "answer": "The uploaded dataset 'sample_business_dataset' does not contain information to answer: 'What is the total revenue for the EMEA or European region?'.",
+        "retrieved_indices": [
+          8,
+          2,
+          6,
+          3,
+          7
+        ],
+        "retrieved_scores": [
+          0.6652690768241882,
+          0.6219079494476318,
+          0.6177594661712646,
+          0.6112245321273804,
+          0.6048254370689392
+        ],
+        "latency_ms": 54.75959996692836
+      },
+      {
+        "query_id": "U-05",
+        "query": "What is the employee turnover rate and satisfaction score?",
+        "category": "unsupported_abstention",
+        "dataset_key": "student_data",
+        "answer": "The uploaded dataset 'student_data' does not contain information to answer: 'What is the employee turnover rate and satisfaction score?'.",
+        "retrieved_indices": [
+          49,
+          8,
+          0,
+          14,
+          19
+        ],
+        "retrieved_scores": [
+          0.5529947876930237,
+          0.5478386282920837,
+          0.5444613695144653,
+          0.5432902574539185,
+          0.5418669581413269
+        ],
+        "latency_ms": 33.74240000266582
+      }
+    ]
+  }
+}

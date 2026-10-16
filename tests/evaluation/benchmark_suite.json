@@ -1,0 +1,228 @@
+{
+  "description": "Isolated RAG accuracy benchmark suite for AI Business Intelligence Assistant",
+  "version": "1.0",
+  "total_queries": 20,
+  "queries": [
+    {
+      "id": "A-01",
+      "category": "structured_analytical",
+      "dataset_key": "sample_business_dataset",
+      "query": "What is the total revenue across all records?",
+      "expected_value": 67300.0,
+      "expected_entities": ["67,300", "67300"],
+      "relevant_row_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "abstention_expected": false,
+      "calculation_formula": "sum(revenue) = 12000+8000+3500+5400+6200+4100+1800+1500+15000+9800"
+    },
+    {
+      "id": "A-02",
+      "category": "structured_analytical",
+      "dataset_key": "sample_business_dataset",
+      "query": "What is the total net profit and overall profit margin?",
+      "expected_value": 14730.0,
+      "expected_margin": 21.89,
+      "expected_entities": ["14,730", "14730", "21.89"],
+      "relevant_row_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "abstention_expected": false,
+      "calculation_formula": "sum(profit) = 14730; margin = (14730 / 67300) * 100 = 21.887%"
+    },
+    {
+      "id": "A-03",
+      "category": "structured_analytical",
+      "dataset_key": "sample_business_dataset",
+      "query": "What is the total revenue generated in the North region?",
+      "expected_value": 33200.0,
+      "expected_entities": ["33,200", "33200"],
+      "relevant_row_indices": [0, 4, 8],
+      "abstention_expected": false,
+      "calculation_formula": "sum(revenue where region == 'North') = 12000 + 6200 + 15000"
+    },
+    {
+      "id": "A-04",
+      "category": "structured_analytical",
+      "dataset_key": "sample_business_dataset",
+      "query": "What is the total revenue for the Electronics category?",
+      "expected_value": 51000.0,
+      "expected_entities": ["51,000", "51000"],
+      "relevant_row_indices": [0, 1, 4, 8, 9],
+      "abstention_expected": false,
+      "calculation_formula": "sum(revenue where category == 'Electronics') = 12000 + 8000 + 6200 + 15000 + 9800"
+    },
+    {
+      "id": "A-05",
+      "category": "structured_analytical",
+      "dataset_key": "sample_business_dataset",
+      "query": "What is the total revenue from customer ABC Corp?",
+      "expected_value": 18200.0,
+      "expected_entities": ["18,200", "18200"],
+      "relevant_row_indices": [0, 4],
+      "abstention_expected": false,
+      "calculation_formula": "sum(revenue where customer == 'ABC Corp') = 12000 + 6200"
+    },
+    {
+      "id": "A-06",
+      "category": "structured_analytical",
+      "dataset_key": "sample_business_dataset",
+      "query": "What is the average revenue per transaction?",
+      "expected_value": 6730.0,
+      "expected_entities": ["6,730", "6730"],
+      "relevant_row_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "abstention_expected": false,
+      "calculation_formula": "mean(revenue) = 67300 / 10 = 6730.0"
+    },
+    {
+      "id": "A-07",
+      "category": "structured_analytical",
+      "dataset_key": "sample_business_dataset",
+      "query": "How many total orders were placed across all transactions?",
+      "expected_value": 203.0,
+      "expected_entities": ["203"],
+      "relevant_row_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "abstention_expected": false,
+      "calculation_formula": "sum(orders) = 15+22+18+12+16+10+30+34+19+27 = 203"
+    },
+    {
+      "id": "A-08",
+      "category": "structured_analytical",
+      "dataset_key": "enterprise_sales",
+      "query": "What is the total revenue for the Bangalore region?",
+      "expected_value": 408000.0,
+      "expected_entities": ["408,000", "408000"],
+      "relevant_row_indices": [0, 2, 4],
+      "abstention_expected": false,
+      "calculation_formula": "sum(revenue where region == 'Bangalore') = 120000 + 98000 + 190000 = 408000"
+    },
+    {
+      "id": "R-01",
+      "category": "semantic_retrieval",
+      "dataset_key": "sample_business_dataset",
+      "query": "Which customer generated the single highest revenue sale, and for which product?",
+      "expected_value": 15000.0,
+      "expected_entities": ["Global Inc", "Laptop", "15,000"],
+      "relevant_row_indices": [8],
+      "abstention_expected": false,
+      "calculation_formula": "max(revenue) is row 8 (Global Inc, Laptop, 15000)"
+    },
+    {
+      "id": "R-02",
+      "category": "semantic_retrieval",
+      "dataset_key": "sample_business_dataset",
+      "query": "What products did RetailOne purchase and in which regions?",
+      "expected_value": null,
+      "expected_entities": ["Keyboard", "Mouse", "East", "West"],
+      "relevant_row_indices": [6, 7],
+      "abstention_expected": false,
+      "calculation_formula": "rows 6 and 7: RetailOne bought Keyboard (East) and Mouse (West)"
+    },
+    {
+      "id": "R-03",
+      "category": "semantic_retrieval",
+      "dataset_key": "sample_business_dataset",
+      "query": "Which customer purchased a Printer, and what was the profit on that sale?",
+      "expected_value": 900.0,
+      "expected_entities": ["TechMart", "Printer", "900"],
+      "relevant_row_indices": [5],
+      "abstention_expected": false,
+      "calculation_formula": "row 5: TechMart bought Printer, profit = 900"
+    },
+    {
+      "id": "R-04",
+      "category": "semantic_retrieval",
+      "dataset_key": "sample_business_dataset",
+      "query": "What are the details of the purchase made by OfficeHub?",
+      "expected_value": 5400.0,
+      "expected_entities": ["OfficeHub", "Desk", "Furniture", "5,400"],
+      "relevant_row_indices": [3],
+      "abstention_expected": false,
+      "calculation_formula": "row 3: OfficeHub bought Desk, Furniture in West for 5400"
+    },
+    {
+      "id": "R-05",
+      "category": "semantic_retrieval",
+      "dataset_key": "enterprise_sales",
+      "query": "What was the revenue and category for Omega Ventures in Hyderabad?",
+      "expected_value": 172000.0,
+      "expected_entities": ["Omega Ventures", "172,000", "SaaS", "Hyderabad"],
+      "relevant_row_indices": [3],
+      "abstention_expected": false,
+      "calculation_formula": "row 3: Omega Ventures in Hyderabad, SaaS, 172000"
+    },
+    {
+      "id": "R-06",
+      "category": "semantic_retrieval",
+      "dataset_key": "student_data",
+      "query": "What is the email address and department for student EMP001 (Sumanth)?",
+      "expected_value": null,
+      "expected_entities": ["sumanth@gmail.com", "CSE", "EMP001"],
+      "relevant_row_indices": [0],
+      "abstention_expected": false,
+      "calculation_formula": "row 0: EMP001, Sumanth, CSE, sumanth@gmail.com"
+    },
+    {
+      "id": "R-07",
+      "category": "semantic_retrieval",
+      "dataset_key": "student_data",
+      "query": "Find the record for student Kavya (EMP042) and report experience and salary.",
+      "expected_value": null,
+      "expected_entities": ["Kavya", "46 years", "51LPA", "EMP042"],
+      "relevant_row_indices": [41],
+      "abstention_expected": false,
+      "calculation_formula": "row 41: EMP042, Kavya, 46 years, 51LPA"
+    },
+    {
+      "id": "U-01",
+      "category": "unsupported_abstention",
+      "dataset_key": "sample_business_dataset",
+      "query": "What is the average student GPA or exam score?",
+      "expected_value": null,
+      "expected_entities": [],
+      "relevant_row_indices": [],
+      "abstention_expected": true,
+      "calculation_formula": "N/A: Sales dataset has no GPA or marks."
+    },
+    {
+      "id": "U-02",
+      "category": "unsupported_abstention",
+      "dataset_key": "student_data",
+      "query": "What is the average student GPA or exam marks in CSE?",
+      "expected_value": null,
+      "expected_entities": [],
+      "relevant_row_indices": [],
+      "abstention_expected": true,
+      "calculation_formula": "N/A: Student dataset schema has only emp_id, name, department, designation, experience, salary, email, phone. No marks or GPA column."
+    },
+    {
+      "id": "U-03",
+      "category": "unsupported_abstention",
+      "dataset_key": "sample_business_dataset",
+      "query": "What was the shipping cost or courier fee for the Laptop order?",
+      "expected_value": null,
+      "expected_entities": [],
+      "relevant_row_indices": [],
+      "abstention_expected": true,
+      "calculation_formula": "N/A: No shipping or courier column exists."
+    },
+    {
+      "id": "U-04",
+      "category": "unsupported_abstention",
+      "dataset_key": "sample_business_dataset",
+      "query": "What is the total revenue for the EMEA or European region?",
+      "expected_value": null,
+      "expected_entities": [],
+      "relevant_row_indices": [],
+      "abstention_expected": true,
+      "calculation_formula": "N/A: EMEA or Europe does not exist in dataset."
+    },
+    {
+      "id": "U-05",
+      "category": "unsupported_abstention",
+      "dataset_key": "student_data",
+      "query": "What is the employee turnover rate and satisfaction score?",
+      "expected_value": null,
+      "expected_entities": [],
+      "relevant_row_indices": [],
+      "abstention_expected": true,
+      "calculation_formula": "N/A: No turnover or satisfaction metric in dataset."
+    }
+  ]
+}
