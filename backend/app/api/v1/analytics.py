@@ -8,7 +8,7 @@ from app.schemas.schemas import (
     ChatMessage, ChatResponse, InsightResponse, AnomalyResponse,
     KPIDashboardResponse, ChartsDashboardResponse, BusinessHealthResponse, DashboardSummaryResponse
 )
-from app.api.deps import get_current_user
+from app.api.deps import get_current_user, check_dataset_access
 from app.services.rag_service import RAGChatService
 from app.services.insights_service import InsightsEngineService
 from app.services.anomaly_service import AnomalyDetectionService
@@ -24,6 +24,14 @@ def rag_chat(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    if not chat_in.dataset_id:
+        raise HTTPException(
+            status_code=400,
+            detail="Active dataset_id is required. Please select an active dataset."
+        )
+
+    check_dataset_access(db, current_user, chat_in.dataset_id)
+
     response = RAGChatService.query_rag_assistant(
         db=db,
         message=chat_in.message,
@@ -37,6 +45,7 @@ def get_insights(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    check_dataset_access(db, current_user, dataset_id)
     insights = db.query(Insight).filter(Insight.dataset_id == dataset_id).all()
     if not insights:
         insights = InsightsEngineService.generate_all_insights(db, dataset_id)
@@ -48,6 +57,7 @@ def get_anomalies(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    check_dataset_access(db, current_user, dataset_id)
     anomalies = db.query(AnomalyResult).filter(AnomalyResult.dataset_id == dataset_id).all()
     if not anomalies:
         anomalies = AnomalyDetectionService.detect_anomalies(db, dataset_id)
@@ -66,6 +76,7 @@ def get_dashboard_summary(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    check_dataset_access(db, current_user, dataset_id)
     analysis = DatasetAnalysisService.get_analysis(db, dataset_id)
     domain = analysis["detected_domains"]["primary_domain"]
     
@@ -143,6 +154,7 @@ def get_dashboard_kpis(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    check_dataset_access(db, current_user, dataset_id)
     return AnalyticsDashboardService.get_kpis(
         db, dataset_id, start_date, end_date, product, region, category, customer
     )
@@ -159,6 +171,7 @@ def get_dashboard_charts(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    check_dataset_access(db, current_user, dataset_id)
     return AnalyticsDashboardService.get_charts(
         db, dataset_id, start_date, end_date, product, region, category, customer
     )
@@ -169,5 +182,6 @@ def get_business_health(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    check_dataset_access(db, current_user, dataset_id)
     return AnalyticsDashboardService.get_health_score(db, dataset_id)
 

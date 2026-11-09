@@ -8,7 +8,7 @@ from app.schemas.schemas import (
     ConversationCreate, ConversationUpdate, ConversationResponse, 
     ChatMessageResponse, AISettingsUpdate, AISettingsResponse, ChatMessage
 )
-from app.api.deps import get_current_user, require_roles
+from app.api.deps import get_current_user, require_roles, check_dataset_access
 from app.services.rag_service import RAGPipelineService
 
 from app.services.dataset_analysis_service import DatasetAnalysisService
@@ -21,6 +21,10 @@ def create_conversation(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    # Validate dataset existence and user permission if a dataset_id is explicitly provided
+    if conv_in.dataset_id is not None:
+        check_dataset_access(db, current_user, conv_in.dataset_id)
+
     conv = Conversation(
         user_id=current_user.id,
         dataset_id=conv_in.dataset_id,
@@ -31,13 +35,8 @@ def create_conversation(
     db.commit()
     db.refresh(conv)
 
-    # Dynamic Welcome message and suggestions
+    # Dynamic Welcome message and suggestions (No unsafe fallback to another dataset)
     dataset_id = conv.dataset_id
-    if not dataset_id:
-        # Fallback to latest uploaded
-        ds = db.query(Dataset).order_by(Dataset.created_at.desc()).first()
-        dataset_id = ds.id if ds else None
-
     domain = "Generic"
     suggestions = ["What columns are available?", "Summarize this dataset", "Show key statistics", "Detect anomalies"]
 
@@ -135,6 +134,10 @@ def get_conversation_history(
     if not conv:
         raise HTTPException(status_code=404, detail="Conversation not found.")
 
+    # Validate access to the conversation's active dataset if present
+    if conv.dataset_id:
+        check_dataset_access(db, current_user, conv.dataset_id)
+
     return conv
 
 @router.put("/conversations/{conversation_id}", response_model=ConversationResponse)
@@ -195,12 +198,19 @@ def send_rag_message(
     if not conv:
         raise HTTPException(status_code=404, detail="Conversation not found.")
 
-
     dataset_id = chat_in.dataset_id or conv.dataset_id
     if not dataset_id:
-        ds = db.query(Dataset).first()
-        if ds:
-            dataset_id = ds.id
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Active dataset_id is required. Please select or provide a dataset."
+        )
+
+    # Validate dataset existence and permission before querying (no silent switching)
+    check_dataset_access(db, current_user, dataset_id)
+
+    if chat_in.dataset_id and conv.dataset_id != chat_in.dataset_id:
+        conv.dataset_id = chat_in.dataset_id
+        db.commit()
 
     assistant_response = RAGPipelineService.execute_rag_query(
         db=db,

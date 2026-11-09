@@ -25,7 +25,44 @@ class DatasetAnalysisService:
         # Load records to compute MD5 payload hash
         records = db.query(DataRecord).filter(DataRecord.dataset_id == dataset_id).order_by(DataRecord.row_index.asc()).all()
         if not records:
-            raise ValueError(f"No records found in database for dataset #{dataset_id}")
+            ds = db.query(Dataset).filter(Dataset.id == dataset_id).first()
+            filename = ds.name if ds else f"dataset_{dataset_id}.csv"
+            return {
+                "dataset_id": dataset_id,
+                "filename": filename,
+                "row_count": 0,
+                "completeness_pct": 0.0,
+                "missing_count": 0,
+                "duplicate_count": 0,
+                "detected_domains": {
+                    "primary_domain": "Empty Dataset",
+                    "secondary_domain": None,
+                    "confidence_score": 0,
+                    "detection_reason": "No data records found in database for dataset."
+                },
+                "schema_metadata": {
+                    "all_columns": [],
+                    "numerical_measures": [],
+                    "categorical_dimensions": [],
+                    "date_columns": [],
+                    "primary_measure": None,
+                    "primary_dimension": None,
+                    "primary_date": None
+                },
+                "kpis": {},
+                "kpi_metadata": {},
+                "anomaly_summaries": [],
+                "recommendations": [],
+                "chart_specifications": {
+                    "trend_data": [],
+                    "category_data": []
+                },
+                "metadata": {
+                    "dataset_hash": "",
+                    "analysis_version": "2.0.0",
+                    "generated_timestamp": datetime.utcnow().isoformat()
+                }
+            }
 
         # Compute payload MD5 hash
         payload_str = "".join([str(r.payload) for r in records])
@@ -256,17 +293,20 @@ class DatasetAnalysisService:
         anomalies = []
         if numerical_measures:
             target = numerical_measures[0]
-            q75, q25 = np.percentile(df[target], [75 ,25])
-            iqr = q75 - q25
-            threshold = q75 + 1.5 * iqr
-            outliers = df[df[target] > threshold]
-            for idx, r in outliers.head(5).iterrows():
-                anomalies.append({
-                    "row_index": int(idx),
-                    "measure": target,
-                    "value": float(r[target]),
-                    "deviation_pct": float(round((r[target] - df[target].mean()) / df[target].mean() * 100, 1)) if df[target].mean() > 0 else 0.0
-                })
+            clean_series = pd.to_numeric(df[target], errors='coerce').dropna()
+            if not clean_series.empty and len(clean_series) >= 4:
+                q75, q25 = np.percentile(clean_series, [75, 25])
+                iqr = q75 - q25
+                threshold = q75 + 1.5 * iqr
+                outliers = df[pd.to_numeric(df[target], errors='coerce') > threshold]
+                m_val = clean_series.mean()
+                for idx, r in outliers.head(5).iterrows():
+                    anomalies.append({
+                        "row_index": int(idx),
+                        "measure": target,
+                        "value": float(r[target]),
+                        "deviation_pct": float(round((r[target] - m_val) / m_val * 100, 1)) if m_val > 0 else 0.0
+                    })
 
         # --- Priority Recommendations (Exactly 5, dynamically bound) ---
         recommendations = []
